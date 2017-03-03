@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="move.js"></script>
+    <link rel="stylesheet" href="top.css">
+    <title></title>
+    <script>
+        function getClass(oParent,sClass){
+            var aResult=[];
+            var oEle=oParent.getElementsByTagName('*');
+            for(var i;i<oEle.length;i++){
+                if(oEle[i].className==sClass){
+                    aResult.push(oEle[i]);
+                }
+            }
+            return aResult;
+        }
+        window.onload=function(){
+            var playImages=document.getElementById('playImages');
+            var oUl=playImages.getElementsByTagName('ul')[0];
+            var oLi=oUl.getElementsByTagName('li');
+            var oOl=playImages.getElementsByTagName('ol')[0];
+            var oOli=oOl.getElementsByTagName('li');
+
+            var now=0;
+            var timer=null;
+
+                for(var i=0;i<oOli.length;i++){
+                    oOli[i].index=i;
+                    oOli[i].onclick=function(){
+                        now=this.index;//点击时才赋值；
+                        tab();
+                    }
+                    oOli[i].onmouseover=function(){
+                        now=this.index;
+                        tab();
+                    }
+            }
+            function tab(){
+                for(var i=0;i<oOli.length;i++){
+                    oOli[i].className='';
+                }
+                oOli[now].className='active';
+                startMove(oUl,{top:-400*now});
+            }
+
+
+            function all(){
+                now++;
+                if(now==oOli.length){
+                    now=0;
+                }
+                tab();
+            }
+
+            var timer=setInterval(all,2000);
+            playImages.onmouseover=function(){
+               clearInterval(timer) ;
+            }
+            playImages.onmouseout=function(){
+                timer=setInterval(all,2000);
+            }
+        }
+
+    </script>
+</head>
+<body>
+<div id="playImages" class="play">
+    <ul>
+        <li><img src="image/bg-1.jpg"/></li>
+        <li><img src="image/bg-2.jpg"/></li>
+        <li><img src="image/bg-3.jpg"/></li>
+        <li><img src="image/timg.jpg"/></li>
+        <li><img src="image/bg4.jpg"/></li>
+    </ul>
+    <ol>
+        <li class="active">1</li>
+        <li>2</li>
+        <li>3</li>
+        <li>4</li>
+        <li>5</li>
+    </ol>
+</div>
+</body>
+</html>
